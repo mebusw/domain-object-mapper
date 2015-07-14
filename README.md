@@ -1,6 +1,9 @@
 Domain Object Mapper
 ====================
 
+## Prerequisite
+* Python 2.7+
+
 ## What does it do?
 Use DSL style to map object to defined domain object.
 
