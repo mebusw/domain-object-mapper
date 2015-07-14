@@ -9,35 +9,44 @@ E.g. in Django framework, the db.models classes is for both domain knowledge and
 According to [Domain Driven Design](), it's better to seperate domain objects from DB models.
 
 ## Usage
-Suppose you're using Django with a model named `UserModel`, which has defined fields:
+Suppose you're using Django model named `UserModel`, which defined some fields:
 ```
-    name <String>
-    email <String>
-    skype <String>
+    class UserModel
+        name  <CharField>
+        email <CharField>
+        skype <CharField>
 ```
 
-### Renaming Attributes
-...And you designed domain object named `User` which is an entity with a field `nickname:
+* Renaming Attributes
+...And you designed a domain object `User` which is an entity with a field `nickname`:
 ```
     class User
-        self.nickname = 'Jacky'
-        ...
+        nickname <String>
 ```
-### Wrapping Attributes
-...And `User` is composed of another value object named `Contact`
+* Wrapping Attributes
+...By defining a mapper `UserMapper`, you could map from Django model to domain object:
+```
+    class UserMapper(Mapper):
+        nickname = Mapper.Attr('name')
+        contact = Mapper.Wrap(Contact, ['email', 'skype'])
+        model = UserModel
+        domain = User
+```
+...Then you'll get `User` which is composed of another value object `Contact`:
 ```
     class Contact:
-        self.email
-        self.skype
+        email <String>
+        skype <String>
 
     class User:
-        self.nickname = 'Jacky'
-        self.contact = Contact()
-
+        nickname <String>
+        contact  <Contact>
 ```
-### Unwrapping Attributes
 
-### Filtering Attributes
+
+* Unwrapping Attributes
+
+* Filtering Attributes
 
 
 ## Thanks
